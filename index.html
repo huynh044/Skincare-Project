@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clinical Skincare Architect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              'clinical-black': '#1a1a1a',
+              'clinical-gray': '#f4f4f5',
+              'clinical-border': '#e4e4e7',
+              
+              // Enhanced Palette
+              'brand-primary': '#2A5C55', // Richer Teal Green
+              'brand-dark': '#142C28',    // Deep Forest
+              'brand-light': '#F0F7F4',   // Minty White
+              'brand-accent': '#D98E73',  // Terracotta/Coral (Warmth)
+              'brand-secondary': '#EBC05C', // Muted Gold
+              'surface-warm': '#FFFCF8',  // Cream
+              'surface-highlight': '#FFFFFF',
+            },
+            boxShadow: {
+              'soft': '0 8px 30px -4px rgba(42, 92, 85, 0.08)',
+              'hover': '0 20px 40px -8px rgba(42, 92, 85, 0.12)',
+              'glow': '0 0 20px rgba(217, 142, 115, 0.3)',
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: #FFFCF8;
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
