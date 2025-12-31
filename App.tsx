@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HashRouter, Routes, Route, Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { PageView, RoutineBundle, Language, CartItem, Product } from './types';
 import { ROUTINES, PRODUCTS } from './constants';
@@ -22,15 +22,15 @@ const Home = ({ onStartQuiz, language, onAddToCart }: { onStartQuiz: () => void,
   return (
     <div className="animate-fade-in">
       {/* Hero Section */}
-      <section className="relative pt-12 md:pt-20 pb-20 md:pb-32 px-6 overflow-hidden bg-gradient-to-b from-brand-light/30 to-surface-warm">
+      <section className="relative pt-12 md:pt-20 pb-20 md:pb-32 px-6 overflow-hidden bg-gradient-to-b from-brand-light/30 to-surface-warm dark:from-brand-dark/20 dark:to-neutral-950 transition-colors duration-500">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           
           {/* Left: Text Content */}
           <div className="relative z-10 text-center md:text-left order-2 md:order-1">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white text-brand-primary text-[10px] uppercase tracking-[0.2em] font-bold rounded-full mb-8 border border-brand-primary/10 shadow-sm animate-fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white dark:bg-neutral-900 text-brand-primary text-[10px] uppercase tracking-[0.2em] font-bold rounded-full mb-8 border border-brand-primary/10 dark:border-brand-primary/20 shadow-sm animate-fade-in transition-colors">
               <Microscope size={12} /> {t.hero.tag}
             </div>
-            <h1 className="text-5xl md:text-7xl font-serif text-brand-dark mb-8 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-serif text-brand-dark dark:text-brand-light mb-8 leading-tight transition-colors">
               {t.hero.title} <br/>
               <span className="text-brand-primary italic relative inline-block">
                  {t.hero.subtitle}
@@ -39,13 +39,13 @@ const Home = ({ onStartQuiz, language, onAddToCart }: { onStartQuiz: () => void,
                  </svg>
               </span>
             </h1>
-            <p className="text-lg text-neutral-600 mb-10 max-w-xl mx-auto md:mx-0 leading-relaxed font-light">
+            <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-10 max-w-xl mx-auto md:mx-0 leading-relaxed font-light transition-colors">
               {t.hero.desc}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <Button onClick={onStartQuiz} className="min-w-[200px] shadow-glow hover:shadow-lg transition-all">{t.hero.ctaPrimary}</Button>
               <Link to="/routines">
-                 <Button variant="outline" className="min-w-[200px] border-brand-dark/20 hover:bg-white">{t.hero.ctaSecondary}</Button>
+                 <Button variant="outline" className="min-w-[200px] border-brand-dark/20 dark:border-brand-light/20 dark:text-brand-light dark:hover:bg-brand-light dark:hover:text-brand-primary hover:bg-white">{t.hero.ctaSecondary}</Button>
               </Link>
             </div>
           </div>
@@ -54,9 +54,9 @@ const Home = ({ onStartQuiz, language, onAddToCart }: { onStartQuiz: () => void,
           <div className="relative z-10 h-[400px] md:h-[600px] flex items-center justify-center order-1 md:order-2">
              {/* Background Blob */}
              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-brand-primary/5 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute w-[250px] h-[250px] border border-brand-primary/10 rounded-full animate-spin-slow"></div>
-                <div className="absolute w-[350px] h-[350px] border border-dashed border-brand-primary/10 rounded-full animate-spin-slow" style={{animationDirection: 'reverse'}}></div>
+                <div className="w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-brand-primary/5 dark:bg-brand-primary/10 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute w-[250px] h-[250px] border border-brand-primary/10 dark:border-brand-primary/20 rounded-full animate-spin-slow"></div>
+                <div className="absolute w-[350px] h-[350px] border border-dashed border-brand-primary/10 dark:border-brand-primary/20 rounded-full animate-spin-slow" style={{animationDirection: 'reverse'}}></div>
              </div>
 
              {/* Main Hero Product (Floating) */}
@@ -69,26 +69,26 @@ const Home = ({ onStartQuiz, language, onAddToCart }: { onStartQuiz: () => void,
                 />
                 
                 {/* Product Shadow */}
-                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-32 h-4 bg-black/20 blur-xl rounded-full"></div>
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-32 h-4 bg-black/20 dark:bg-black/50 blur-xl rounded-full"></div>
              </div>
 
              {/* Floating Science Card 1 (Top Right) */}
-             <div className="absolute top-10 right-0 md:right-10 bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-soft border border-brand-primary/10 animate-float-delayed max-w-[140px]">
+             <div className="absolute top-10 right-0 md:right-10 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md p-4 rounded-xl shadow-soft border border-brand-primary/10 dark:border-neutral-800 animate-float-delayed max-w-[140px] transition-colors">
                 <div className="flex items-center gap-2 mb-2 text-brand-primary">
                    <FlaskConical size={16} />
                    <span className="text-[10px] font-bold uppercase">Active</span>
                 </div>
-                <p className="text-xs font-serif text-brand-dark leading-tight">Niacinamide 10%</p>
+                <p className="text-xs font-serif text-brand-dark dark:text-neutral-200 leading-tight">Niacinamide 10%</p>
                 <p className="text-[10px] text-neutral-500 mt-1">Regulates Sebum</p>
              </div>
 
              {/* Floating Science Card 2 (Bottom Left) */}
-             <div className="absolute bottom-20 left-0 md:left-10 bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-soft border border-brand-primary/10 animate-float max-w-[140px]">
+             <div className="absolute bottom-20 left-0 md:left-10 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md p-4 rounded-xl shadow-soft border border-brand-primary/10 dark:border-neutral-800 animate-float max-w-[140px] transition-colors">
                 <div className="flex items-center gap-2 mb-2 text-brand-accent">
                    <Droplets size={16} />
                    <span className="text-[10px] font-bold uppercase">pH Level</span>
                 </div>
-                <p className="text-xs font-serif text-brand-dark leading-tight">5.50 - 6.50</p>
+                <p className="text-xs font-serif text-brand-dark dark:text-neutral-200 leading-tight">5.50 - 6.50</p>
                 <p className="text-[10px] text-neutral-500 mt-1">Balanced for skin</p>
              </div>
           </div>
@@ -96,32 +96,32 @@ const Home = ({ onStartQuiz, language, onAddToCart }: { onStartQuiz: () => void,
       </section>
 
       {/* Value Props */}
-      <section className="py-24 px-6 bg-white border-y border-brand-primary/5 relative z-20 -mt-10 md:-mt-20 rounded-t-[3rem] shadow-soft">
+      <section className="py-24 px-6 bg-white dark:bg-neutral-900 border-y border-brand-primary/5 dark:border-neutral-800 relative z-20 -mt-10 md:-mt-20 rounded-t-[3rem] shadow-soft transition-colors duration-500">
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
-          <div className="space-y-4 p-8 rounded-2xl hover:bg-brand-light/40 transition-colors duration-500 group">
-            <div className="w-14 h-14 bg-brand-light text-brand-primary flex items-center justify-center mb-4 rounded-full group-hover:scale-110 transition-transform">
+          <div className="space-y-4 p-8 rounded-2xl hover:bg-brand-light/40 dark:hover:bg-brand-dark/10 transition-colors duration-500 group">
+            <div className="w-14 h-14 bg-brand-light dark:bg-neutral-800 text-brand-primary flex items-center justify-center mb-4 rounded-full group-hover:scale-110 transition-transform">
               <Beaker size={26} strokeWidth={1.5} />
             </div>
-            <h3 className="text-xl font-serif text-brand-dark">Clinical Formulations</h3>
-            <p className="text-neutral-500 text-sm leading-relaxed">
+            <h3 className="text-xl font-serif text-brand-dark dark:text-neutral-100">Clinical Formulations</h3>
+            <p className="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed">
               We use therapeutic concentrations of active ingredients. No fillers, no fragrance, just functional chemistry.
             </p>
           </div>
-          <div className="space-y-4 p-8 rounded-2xl hover:bg-brand-light/40 transition-colors duration-500 group">
-            <div className="w-14 h-14 bg-brand-light text-brand-primary flex items-center justify-center mb-4 rounded-full group-hover:scale-110 transition-transform">
+          <div className="space-y-4 p-8 rounded-2xl hover:bg-brand-light/40 dark:hover:bg-brand-dark/10 transition-colors duration-500 group">
+            <div className="w-14 h-14 bg-brand-light dark:bg-neutral-800 text-brand-primary flex items-center justify-center mb-4 rounded-full group-hover:scale-110 transition-transform">
               <Shield size={26} strokeWidth={1.5} />
             </div>
-            <h3 className="text-xl font-serif text-brand-dark">Safety First</h3>
-            <p className="text-neutral-500 text-sm leading-relaxed">
+            <h3 className="text-xl font-serif text-brand-dark dark:text-neutral-100">Safety First</h3>
+            <p className="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed">
               Conflicts between actives (like Retinol and Vitamin C) are automatically flagged and separated in your routine.
             </p>
           </div>
-          <div className="space-y-4 p-8 rounded-2xl hover:bg-brand-light/40 transition-colors duration-500 group">
-            <div className="w-14 h-14 bg-brand-light text-brand-primary flex items-center justify-center mb-4 rounded-full group-hover:scale-110 transition-transform">
+          <div className="space-y-4 p-8 rounded-2xl hover:bg-brand-light/40 dark:hover:bg-brand-dark/10 transition-colors duration-500 group">
+            <div className="w-14 h-14 bg-brand-light dark:bg-neutral-800 text-brand-primary flex items-center justify-center mb-4 rounded-full group-hover:scale-110 transition-transform">
               <Info size={26} strokeWidth={1.5} />
             </div>
-            <h3 className="text-xl font-serif text-brand-dark">Transparent Education</h3>
-            <p className="text-neutral-500 text-sm leading-relaxed">
+            <h3 className="text-xl font-serif text-brand-dark dark:text-neutral-100">Transparent Education</h3>
+            <p className="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed">
               Understand exactly what you are putting on your skin and why. We demystify the science of skincare.
             </p>
           </div>
@@ -129,28 +129,28 @@ const Home = ({ onStartQuiz, language, onAddToCart }: { onStartQuiz: () => void,
       </section>
 
       {/* NEW SECTION: Essential Molecules Spotlight */}
-      <section className="py-24 px-6 bg-white">
+      <section className="py-24 px-6 bg-white dark:bg-neutral-900 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-primary">The Foundation</span>
-            <h2 className="text-4xl md:text-5xl font-serif text-brand-dark mt-4 mb-4">Essential Molecules</h2>
-            <p className="text-neutral-500 max-w-2xl mx-auto">High-purity actives designed to target specific skin concerns effectively.</p>
+            <h2 className="text-4xl md:text-5xl font-serif text-brand-dark dark:text-white mt-4 mb-4">Essential Molecules</h2>
+            <p className="text-neutral-500 dark:text-neutral-400 max-w-2xl mx-auto">High-purity actives designed to target specific skin concerns effectively.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {spotlightProducts.map((product) => (
-              <div key={product.id} className="group relative bg-surface-warm rounded-3xl p-8 border border-gray-100 transition-all duration-500 hover:shadow-hover hover:border-brand-primary/20 flex flex-col">
+              <div key={product.id} className="group relative bg-surface-warm dark:bg-neutral-950 rounded-3xl p-8 border border-gray-100 dark:border-neutral-800 transition-all duration-500 hover:shadow-hover hover:border-brand-primary/20 dark:hover:border-brand-primary/30 flex flex-col">
                 
                 {/* Lab Spec Badge */}
                 <div className="absolute top-6 right-6 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="bg-white/80 backdrop-blur border border-brand-primary/10 px-3 py-1 rounded text-[10px] font-mono text-brand-dark">
+                    <div className="bg-white/80 dark:bg-neutral-900/80 backdrop-blur border border-brand-primary/10 dark:border-neutral-700 px-3 py-1 rounded text-[10px] font-mono text-brand-dark dark:text-neutral-200">
                         pH: {product.phLevel || 'N/A'}
                     </div>
                 </div>
 
                 {/* Image Container */}
                 <div className="relative h-64 mb-8 flex items-center justify-center">
-                  <div className="absolute inset-0 bg-white rounded-2xl transform rotate-3 group-hover:rotate-6 transition-transform duration-500 border border-gray-100"></div>
+                  <div className="absolute inset-0 bg-white dark:bg-neutral-900 rounded-2xl transform rotate-3 group-hover:rotate-6 transition-transform duration-500 border border-gray-100 dark:border-neutral-800"></div>
                   <img 
                     src={product.image} 
                     alt={product.name} 
@@ -170,32 +170,32 @@ const Home = ({ onStartQuiz, language, onAddToCart }: { onStartQuiz: () => void,
                           <Star size={10} fill="currentColor" />
                        </div>
                    </div>
-                   <h3 className="text-xl font-serif text-brand-dark mb-3 group-hover:text-brand-primary transition-colors">{product.name}</h3>
-                   <p className="text-sm text-neutral-500 leading-relaxed mb-4 line-clamp-3">
+                   <h3 className="text-xl font-serif text-brand-dark dark:text-neutral-100 mb-3 group-hover:text-brand-primary transition-colors">{product.name}</h3>
+                   <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed mb-4 line-clamp-3">
                      {product.description[language]}
                    </p>
                    
                    {/* Tech Specs */}
                    <div className="grid grid-cols-2 gap-2 mb-6">
-                      <div className="bg-white px-3 py-2 rounded border border-gray-100">
+                      <div className="bg-white dark:bg-neutral-900 px-3 py-2 rounded border border-gray-100 dark:border-neutral-800">
                         <span className="block text-[10px] text-gray-400 uppercase">Format</span>
-                        <span className="text-xs font-medium text-brand-dark">{product.format}</span>
+                        <span className="text-xs font-medium text-brand-dark dark:text-neutral-200">{product.format}</span>
                       </div>
-                      <div className="bg-white px-3 py-2 rounded border border-gray-100">
+                      <div className="bg-white dark:bg-neutral-900 px-3 py-2 rounded border border-gray-100 dark:border-neutral-800">
                         <span className="block text-[10px] text-gray-400 uppercase">Target</span>
-                        <span className="text-xs font-medium text-brand-dark">{product.activeIngredient || 'General'}</span>
+                        <span className="text-xs font-medium text-brand-dark dark:text-neutral-200">{product.activeIngredient || 'General'}</span>
                       </div>
                    </div>
                 </div>
 
                 {/* Action */}
-                <div className="mt-auto pt-6 border-t border-gray-200/50 flex justify-between items-center">
-                   <span className="font-mono font-medium text-brand-dark">
+                <div className="mt-auto pt-6 border-t border-gray-200/50 dark:border-neutral-800 flex justify-between items-center">
+                   <span className="font-mono font-medium text-brand-dark dark:text-brand-light">
                       {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
                    </span>
                    <button 
                      onClick={() => onAddToCart(product)}
-                     className="w-10 h-10 rounded-full bg-brand-dark text-white flex items-center justify-center hover:bg-brand-primary transition-colors shadow-lg shadow-brand-dark/20"
+                     className="w-10 h-10 rounded-full bg-brand-dark dark:bg-white text-white dark:text-brand-dark flex items-center justify-center hover:bg-brand-primary dark:hover:bg-brand-light dark:hover:text-brand-primary transition-colors shadow-lg shadow-brand-dark/20"
                    >
                       <Plus size={20} />
                    </button>
@@ -207,12 +207,12 @@ const Home = ({ onStartQuiz, language, onAddToCart }: { onStartQuiz: () => void,
       </section>
 
       {/* Featured Routines Preview */}
-      <section className="py-24 px-6 bg-surface-warm">
+      <section className="py-24 px-6 bg-surface-warm dark:bg-neutral-950 transition-colors">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-end mb-12">
             <div>
-              <h2 className="text-3xl font-serif text-brand-dark mb-3">{t.routine.standard}</h2>
-              <p className="text-neutral-500 text-sm">{t.routine.standardDesc}</p>
+              <h2 className="text-3xl font-serif text-brand-dark dark:text-white mb-3">{t.routine.standard}</h2>
+              <p className="text-neutral-500 dark:text-neutral-400 text-sm">{t.routine.standardDesc}</p>
             </div>
             <Link to="/routines" className="hidden md:flex items-center gap-2 text-sm font-medium text-brand-primary hover:text-brand-accent transition-colors border-b border-transparent hover:border-brand-accent pb-1">
               {t.routine.viewAll} <ArrowRight size={16} />
@@ -241,8 +241,8 @@ const RoutinesList = ({ language }: { language: Language }) => {
     return (
         <div className="max-w-6xl mx-auto py-20 px-6">
             <div className="text-center mb-16">
-              <h1 className="text-4xl md:text-5xl font-serif text-brand-dark mb-6">{t.routine.curated}</h1>
-              <p className="text-neutral-500 max-w-2xl mx-auto leading-relaxed">
+              <h1 className="text-4xl md:text-5xl font-serif text-brand-dark dark:text-white mb-6 transition-colors">{t.routine.curated}</h1>
+              <p className="text-neutral-500 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed transition-colors">
                   {t.routine.curatedDesc}
               </p>
             </div>
@@ -310,13 +310,13 @@ const RoutineDetail = ({ id, analysis, language, onAddBundle }: { id?: string, a
     return (
         <div className="max-w-6xl mx-auto py-12 px-6 animate-fade-in">
             {analysis && (
-                <div className="mb-12 p-8 bg-gradient-to-r from-brand-light to-white border border-brand-primary/10 rounded-2xl relative overflow-hidden shadow-sm">
+                <div className="mb-12 p-8 bg-gradient-to-r from-brand-light to-white dark:from-neutral-900 dark:to-neutral-900 border border-brand-primary/10 dark:border-neutral-800 rounded-2xl relative overflow-hidden shadow-sm">
                     <div className="absolute top-0 left-0 w-1.5 h-full bg-brand-primary"></div>
                     <div className="flex items-center gap-2 mb-4 text-brand-primary font-medium">
                         <Sparkles size={18} />
                         <h3 className="uppercase tracking-widest text-xs font-bold">{t.routine.analysisTitle}</h3>
                     </div>
-                    <p className="text-brand-dark text-lg leading-relaxed font-serif italic">
+                    <p className="text-brand-dark dark:text-neutral-200 text-lg leading-relaxed font-serif italic">
                         "{analysis}"
                     </p>
                 </div>
@@ -325,23 +325,23 @@ const RoutineDetail = ({ id, analysis, language, onAddBundle }: { id?: string, a
             <div className="grid lg:grid-cols-3 gap-16">
                 <div className="lg:col-span-2">
                     <div className="mb-12">
-                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-primary bg-brand-light px-3 py-1.5 rounded-full border border-brand-primary/5">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-primary bg-brand-light dark:bg-neutral-800 px-3 py-1.5 rounded-full border border-brand-primary/5 dark:border-neutral-700">
                             {routine.targetAudience[language]}
                         </span>
-                        <h1 className="text-4xl md:text-5xl font-serif text-brand-dark mt-6 mb-4">{routine.name[language]}</h1>
-                        <p className="text-lg text-neutral-600 font-light leading-relaxed">{routine.description[language]}</p>
+                        <h1 className="text-4xl md:text-5xl font-serif text-brand-dark dark:text-white mt-6 mb-4 transition-colors">{routine.name[language]}</h1>
+                        <p className="text-lg text-neutral-600 dark:text-neutral-400 font-light leading-relaxed transition-colors">{routine.description[language]}</p>
                     </div>
 
                     {/* Time of Day Toggle */}
-                    <div className="flex border-b border-gray-200 mb-10 gap-8">
+                    <div className="flex border-b border-gray-200 dark:border-neutral-800 mb-10 gap-8">
                         <button 
-                            className={`pb-4 text-sm font-medium flex items-center gap-2 border-b-2 transition-all ${activeTab === 'AM' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-neutral-400 hover:text-neutral-600'}`}
+                            className={`pb-4 text-sm font-medium flex items-center gap-2 border-b-2 transition-all ${activeTab === 'AM' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300'}`}
                             onClick={() => setActiveTab('AM')}
                         >
                             <Sun size={18} /> {t.routine.am}
                         </button>
                         <button 
-                            className={`pb-4 text-sm font-medium flex items-center gap-2 border-b-2 transition-all ${activeTab === 'PM' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-neutral-400 hover:text-neutral-600'}`}
+                            className={`pb-4 text-sm font-medium flex items-center gap-2 border-b-2 transition-all ${activeTab === 'PM' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300'}`}
                             onClick={() => setActiveTab('PM')}
                         >
                             <Moon size={18} /> {t.routine.pm}
@@ -351,18 +351,18 @@ const RoutineDetail = ({ id, analysis, language, onAddBundle }: { id?: string, a
                     {/* Steps List */}
                     <div className="space-y-8 relative">
                         {/* Connecting Line */}
-                        <div className="absolute left-4 -translate-x-1/2 top-6 bottom-6 w-px bg-gray-200 -z-10"></div>
+                        <div className="absolute left-4 -translate-x-1/2 top-6 bottom-6 w-px bg-gray-200 dark:bg-neutral-800 -z-10"></div>
                         
                         {steps.map((step, idx) => (
                             <div key={idx} className="flex gap-8 group">
                                 <div className="flex flex-col items-center pt-2">
-                                    <div className="w-8 h-8 rounded-full bg-white border-2 border-brand-primary text-brand-primary flex items-center justify-center text-sm font-bold z-10 transition-all group-hover:bg-brand-primary group-hover:text-white group-hover:scale-110 shadow-sm">
+                                    <div className="w-8 h-8 rounded-full bg-white dark:bg-neutral-900 border-2 border-brand-primary text-brand-primary flex items-center justify-center text-sm font-bold z-10 transition-all group-hover:bg-brand-primary group-hover:text-white group-hover:scale-110 shadow-sm">
                                         {idx + 1}
                                     </div>
                                 </div>
                                 <div className="flex-grow">
-                                    <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm transition-all hover:shadow-hover hover:border-brand-primary/20 flex flex-col md:flex-row gap-6 items-start group-hover:-translate-y-1">
-                                        <div className="shrink-0 bg-brand-light/30 p-2 rounded-xl border border-brand-primary/5">
+                                    <div className="bg-white dark:bg-neutral-900 p-6 rounded-2xl border border-gray-100 dark:border-neutral-800 shadow-sm transition-all hover:shadow-hover hover:border-brand-primary/20 dark:hover:border-brand-primary/20 flex flex-col md:flex-row gap-6 items-start group-hover:-translate-y-1">
+                                        <div className="shrink-0 bg-brand-light/30 dark:bg-neutral-800 p-2 rounded-xl border border-brand-primary/5 dark:border-neutral-700">
                                              <ProductImage 
                                                 src={step.product.image} 
                                                 alt={step.product.name}
@@ -372,15 +372,15 @@ const RoutineDetail = ({ id, analysis, language, onAddBundle }: { id?: string, a
                                        
                                         <div className="flex-grow">
                                             <div className="flex justify-between items-start">
-                                                <div className="text-[10px] uppercase tracking-wider font-bold text-brand-primary/60 mb-2">
+                                                <div className="text-[10px] uppercase tracking-wider font-bold text-brand-primary/60 dark:text-brand-primary/80 mb-2">
                                                     {step.product.type} {step.product.activeIngredient && `• ${step.product.activeIngredient}`}
                                                 </div>
                                                 <span className="text-[10px] font-mono text-gray-400">{step.product.format}</span>
                                             </div>
                                             
-                                            <h4 className="font-serif text-xl text-brand-dark mb-2">{step.product.name}</h4>
-                                            <p className="text-sm text-neutral-500 mb-4 leading-relaxed">{step.product.description[language]}</p>
-                                            <div className="inline-flex items-center gap-2 text-xs font-medium text-brand-dark bg-brand-light/50 px-3 py-1.5 rounded-md border border-brand-primary/5">
+                                            <h4 className="font-serif text-xl text-brand-dark dark:text-neutral-100 mb-2">{step.product.name}</h4>
+                                            <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-4 leading-relaxed">{step.product.description[language]}</p>
+                                            <div className="inline-flex items-center gap-2 text-xs font-medium text-brand-dark dark:text-neutral-300 bg-brand-light/50 dark:bg-neutral-800 px-3 py-1.5 rounded-md border border-brand-primary/5 dark:border-neutral-700">
                                                 <span className="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
                                                 Usage: {step.instruction[language]}
                                             </div>
@@ -394,13 +394,13 @@ const RoutineDetail = ({ id, analysis, language, onAddBundle }: { id?: string, a
 
                 <div className="space-y-8">
                      {/* Summary Card */}
-                    <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-soft sticky top-24">
-                        <h3 className="font-serif text-xl text-brand-dark mb-6 flex items-center gap-3">
+                    <div className="bg-white dark:bg-neutral-900 p-8 rounded-2xl border border-gray-100 dark:border-neutral-800 shadow-soft sticky top-24 transition-colors">
+                        <h3 className="font-serif text-xl text-brand-dark dark:text-neutral-100 mb-6 flex items-center gap-3">
                             <ShieldCheck size={20} className="text-brand-accent" /> {t.routine.safety}
                         </h3>
                         <ul className="space-y-4 mb-8">
                             {routine.safetyNotes.map((note, i) => (
-                                <li key={i} className="text-sm text-neutral-600 flex gap-3 items-start">
+                                <li key={i} className="text-sm text-neutral-600 dark:text-neutral-400 flex gap-3 items-start">
                                     <span className="text-brand-accent mt-1.5">•</span> 
                                     <span className="leading-relaxed">{note[language]}</span>
                                 </li>
@@ -410,14 +410,14 @@ const RoutineDetail = ({ id, analysis, language, onAddBundle }: { id?: string, a
                     </div>
 
                     {/* Bot Interaction */}
-                     <div className="bg-gradient-to-br from-brand-light/50 to-white border border-brand-primary/10 p-6 rounded-2xl shadow-sm">
+                     <div className="bg-gradient-to-br from-brand-light/50 to-white dark:from-neutral-900 dark:to-neutral-900 border border-brand-primary/10 dark:border-neutral-800 p-6 rounded-2xl shadow-sm transition-colors">
                         <h3 className="font-bold text-xs uppercase tracking-widest text-brand-primary mb-4 flex items-center gap-2">
                              <Sparkles size={14} /> {t.routine.ask}
                         </h3>
                         <div className="space-y-3">
                             {botResponse ? (
-                                <div className="bg-white p-4 rounded-xl shadow-sm text-sm text-neutral-700 mb-4 border border-gray-100 relative">
-                                    <div className="absolute -left-2 top-4 w-4 h-4 bg-white border-l border-b border-gray-100 transform rotate-45"></div>
+                                <div className="bg-white dark:bg-neutral-800 p-4 rounded-xl shadow-sm text-sm text-neutral-700 dark:text-neutral-300 mb-4 border border-gray-100 dark:border-neutral-700 relative">
+                                    <div className="absolute -left-2 top-4 w-4 h-4 bg-white dark:bg-neutral-800 border-l border-b border-gray-100 dark:border-neutral-700 transform rotate-45"></div>
                                     <span className="font-bold block text-xs uppercase mb-2 text-brand-primary">DermBot:</span>
                                     <p className="leading-relaxed">{botResponse}</p>
                                     <button onClick={() => setBotResponse(null)} className="text-xs text-brand-accent font-medium mt-3 hover:underline">Ask another question</button>
@@ -427,7 +427,7 @@ const RoutineDetail = ({ id, analysis, language, onAddBundle }: { id?: string, a
                                     <textarea 
                                         rows={3}
                                         placeholder={t.routine.askPlaceholder} 
-                                        className="w-full text-sm p-3 rounded-lg border border-gray-200 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary bg-white resize-none"
+                                        className="w-full text-sm p-3 rounded-lg border border-gray-200 dark:border-neutral-700 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary bg-white dark:bg-neutral-800 dark:text-neutral-200 resize-none"
                                         value={question}
                                         onChange={(e) => setQuestion(e.target.value)}
                                     />
@@ -452,7 +452,7 @@ const RoutineDetail = ({ id, analysis, language, onAddBundle }: { id?: string, a
 
 const Learn = () => (
     <div className="max-w-4xl mx-auto py-20 px-6">
-        <h1 className="text-4xl md:text-5xl font-serif text-brand-dark mb-12 text-center">Ingredient Dictionary</h1>
+        <h1 className="text-4xl md:text-5xl font-serif text-brand-dark dark:text-white mb-12 text-center transition-colors">Ingredient Dictionary</h1>
         <div className="grid gap-8">
             {[
                 {
@@ -474,18 +474,18 @@ const Learn = () => (
                     tags: ["Exfoliation", "Radiance", "Deep Cleaning"]
                 }
             ].map((item, i) => (
-                <div key={i} className="bg-white p-8 rounded-2xl shadow-soft border border-gray-100 hover:border-brand-primary/20 transition-all hover:-translate-y-1">
+                <div key={i} className="bg-white dark:bg-neutral-900 p-8 rounded-2xl shadow-soft border border-gray-100 dark:border-neutral-800 hover:border-brand-primary/20 dark:hover:border-brand-primary/30 transition-all hover:-translate-y-1">
                     <div className="flex items-start justify-between mb-4">
-                         <h2 className="text-2xl font-serif text-brand-dark">{item.title}</h2>
-                         <span className="bg-brand-light text-brand-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">{item.type}</span>
+                         <h2 className="text-2xl font-serif text-brand-dark dark:text-neutral-100">{item.title}</h2>
+                         <span className="bg-brand-light dark:bg-neutral-800 text-brand-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">{item.type}</span>
                     </div>
                     
-                    <p className="text-neutral-600 leading-relaxed mb-6">
+                    <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">
                         {item.desc}
                     </p>
                     <div className="flex flex-wrap gap-2 text-[10px] uppercase font-bold text-brand-primary/70">
                         {item.tags.map(tag => (
-                             <span key={tag} className="bg-gray-50 px-2 py-1 rounded border border-gray-100">{tag}</span> 
+                             <span key={tag} className="bg-gray-50 dark:bg-neutral-800 px-2 py-1 rounded border border-gray-100 dark:border-neutral-700 dark:text-neutral-400">{tag}</span> 
                         ))}
                     </div>
                 </div>
@@ -506,9 +506,35 @@ const App: React.FC = () => {
   const [quizResult, setQuizResult] = useState<{routine: RoutineBundle, analysis: string} | null>(null);
   const [language, setLanguage] = useState<Language>('en');
   
+  // Theme State
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
   // Cart State
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  useEffect(() => {
+    // Check local storage or system preference
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        setTheme('dark');
+        document.documentElement.classList.add('dark');
+    } else {
+        setTheme('light');
+        document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+      if (theme === 'light') {
+          setTheme('dark');
+          localStorage.theme = 'dark';
+          document.documentElement.classList.add('dark');
+      } else {
+          setTheme('light');
+          localStorage.theme = 'light';
+          document.documentElement.classList.remove('dark');
+      }
+  };
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'en' ? 'vn' : 'en');
@@ -563,7 +589,7 @@ const App: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-surface-warm text-clinical-black font-sans flex flex-col selection:bg-brand-accent selection:text-white">
+        <div className="min-h-screen bg-surface-warm dark:bg-neutral-950 text-clinical-black dark:text-neutral-200 font-sans flex flex-col selection:bg-brand-accent selection:text-white transition-colors duration-300">
           <CartDrawer 
             isOpen={isCartOpen} 
             onClose={() => setIsCartOpen(false)} 
@@ -574,33 +600,43 @@ const App: React.FC = () => {
           />
 
           {/* Navigation */}
-          <nav className="border-b border-brand-primary/5 sticky top-0 bg-white/85 backdrop-blur-xl z-50">
+          <nav className="border-b border-brand-primary/5 dark:border-neutral-800 sticky top-0 bg-white/85 dark:bg-neutral-950/85 backdrop-blur-xl z-50 transition-colors">
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
               <Link to="/" className="flex items-center gap-3 group" onClick={() => setQuizResult(null)}>
                 <img 
                     src="https://raw.githubusercontent.com/huynh044/DogvsCat/f1c29b77a4b5e334d3f942763d36090ab1aa5d62/logo.png
 " 
                     alt="The Ordinary+" 
-                    className="h-12 md:h-14 w-auto object-contain transition-transform group-hover:scale-105" 
+                    className="h-12 md:h-14 w-auto object-contain transition-transform group-hover:scale-105 filter dark:invert" 
                 />
               </Link>
 
               {/* Desktop Nav */}
-              <div className="hidden md:flex items-center gap-8 text-sm font-medium text-brand-dark">
+              <div className="hidden md:flex items-center gap-8 text-sm font-medium text-brand-dark dark:text-neutral-200">
                 <Link to="/quiz" className="hover:text-brand-primary transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-brand-primary after:transition-all hover:after:w-full">{t.quiz}</Link>
                 <Link to="/routines" className="hover:text-brand-primary transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-brand-primary after:transition-all hover:after:w-full">{t.routines}</Link>
                 <Link to="/learn" className="hover:text-brand-primary transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-brand-primary after:transition-all hover:after:w-full">{t.learn}</Link>
                 
+                <div className="h-4 w-px bg-gray-300 dark:bg-neutral-700 mx-2"></div>
+
+                <button 
+                  onClick={toggleTheme}
+                  className="p-2 text-neutral-500 hover:text-brand-primary transition-colors"
+                  aria-label="Toggle Dark Mode"
+                >
+                    {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+                </button>
+
                 <button 
                   onClick={toggleLanguage} 
-                  className="flex items-center gap-1 text-neutral-500 hover:text-brand-primary uppercase text-[10px] font-bold border border-gray-200 hover:border-brand-primary px-3 py-1.5 rounded-full transition-all"
+                  className="flex items-center gap-1 text-neutral-500 hover:text-brand-primary uppercase text-[10px] font-bold border border-gray-200 dark:border-neutral-700 hover:border-brand-primary px-3 py-1.5 rounded-full transition-all"
                 >
                   <Globe size={12} /> {language}
                 </button>
                 
                 <button 
                     onClick={() => setIsCartOpen(true)}
-                    className="relative p-2 text-brand-dark hover:text-brand-primary transition-colors"
+                    className="relative p-2 text-brand-dark dark:text-neutral-200 hover:text-brand-primary transition-colors"
                 >
                     <ShoppingBag size={20} />
                     {totalItems > 0 && (
@@ -619,7 +655,7 @@ const App: React.FC = () => {
               <div className="flex items-center gap-4 md:hidden">
                   <button 
                     onClick={() => setIsCartOpen(true)}
-                    className="relative p-2 text-brand-dark"
+                    className="relative p-2 text-brand-dark dark:text-neutral-200"
                   >
                     <ShoppingBag size={20} />
                     {totalItems > 0 && (
@@ -629,7 +665,7 @@ const App: React.FC = () => {
                     )}
                 </button>
                 <button 
-                    className="text-brand-dark"
+                    className="text-brand-dark dark:text-neutral-200"
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 >
                     {mobileMenuOpen ? <X /> : <Menu />}
@@ -639,14 +675,20 @@ const App: React.FC = () => {
 
             {/* Mobile Nav */}
             {mobileMenuOpen && (
-              <div className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-200 p-6 flex flex-col gap-6 animate-fade-in shadow-xl z-40 h-[calc(100vh-5rem)]">
-                <Link to="/" onClick={() => setMobileMenuOpen(false)} className="text-xl font-serif text-brand-dark">{t.home}</Link>
-                <Link to="/quiz" onClick={() => setMobileMenuOpen(false)} className="text-xl font-serif text-brand-dark">{t.quiz}</Link>
-                <Link to="/routines" onClick={() => setMobileMenuOpen(false)} className="text-xl font-serif text-brand-dark">{t.routines}</Link>
-                <Link to="/learn" onClick={() => setMobileMenuOpen(false)} className="text-xl font-serif text-brand-dark">{t.learn}</Link>
-                <button onClick={() => {toggleLanguage(); setMobileMenuOpen(false);}} className="text-left text-lg font-medium flex items-center gap-2 text-brand-primary mt-4">
-                    <Globe size={18} /> Switch to {language === 'en' ? 'Vietnamese' : 'English'}
-                </button>
+              <div className="md:hidden absolute top-20 left-0 w-full bg-white dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 p-6 flex flex-col gap-6 animate-fade-in shadow-xl z-40 h-[calc(100vh-5rem)]">
+                <Link to="/" onClick={() => setMobileMenuOpen(false)} className="text-xl font-serif text-brand-dark dark:text-neutral-100">{t.home}</Link>
+                <Link to="/quiz" onClick={() => setMobileMenuOpen(false)} className="text-xl font-serif text-brand-dark dark:text-neutral-100">{t.quiz}</Link>
+                <Link to="/routines" onClick={() => setMobileMenuOpen(false)} className="text-xl font-serif text-brand-dark dark:text-neutral-100">{t.routines}</Link>
+                <Link to="/learn" onClick={() => setMobileMenuOpen(false)} className="text-xl font-serif text-brand-dark dark:text-neutral-100">{t.learn}</Link>
+                
+                <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100 dark:border-neutral-800">
+                     <button onClick={() => {toggleLanguage(); setMobileMenuOpen(false);}} className="text-lg font-medium flex items-center gap-2 text-brand-primary">
+                        <Globe size={18} /> {language === 'en' ? 'Vietnamese' : 'English'}
+                    </button>
+                    <button onClick={() => {toggleTheme();}} className="text-lg font-medium flex items-center gap-2 text-neutral-500 dark:text-neutral-400">
+                        {theme === 'light' ? <><Moon size={18} /> Dark Mode</> : <><Sun size={18} /> Light Mode</>}
+                    </button>
+                </div>
               </div>
             )}
           </nav>

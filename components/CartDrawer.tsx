@@ -39,17 +39,17 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
       ></div>
 
       {/* Drawer */}
-      <div className="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-[70] transform transition-transform duration-300 flex flex-col animate-fade-in">
-        <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-surface-warm">
-          <h2 className="text-xl font-serif text-brand-dark flex items-center gap-2">
+      <div className="fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-neutral-900 shadow-2xl z-[70] transform transition-transform duration-300 flex flex-col animate-fade-in text-brand-dark dark:text-neutral-200">
+        <div className="p-6 border-b border-gray-100 dark:border-neutral-800 flex items-center justify-between bg-surface-warm dark:bg-neutral-950">
+          <h2 className="text-xl font-serif text-brand-dark dark:text-neutral-100 flex items-center gap-2">
             <ShoppingBag size={20} /> {t.cart.title}
           </h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-neutral-500">
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-full transition-colors text-neutral-500">
             <X size={20} />
           </button>
         </div>
 
-        <div className="flex-grow overflow-y-auto p-6 space-y-6">
+        <div className="flex-grow overflow-y-auto p-6 space-y-6 bg-white dark:bg-neutral-900">
           {cart.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-neutral-400 space-y-4">
               <ShoppingBag size={48} strokeWidth={1} />
@@ -58,18 +58,18 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             </div>
           ) : (
             cart.map((item) => (
-              <div key={item.id} className="flex gap-4 p-4 rounded-xl border border-gray-100 hover:border-brand-primary/20 transition-colors bg-white shadow-sm">
-                <div className="w-20 h-20 shrink-0 bg-brand-light/30 rounded-lg p-2 border border-brand-primary/5">
-                  <img src={item.image} alt={item.name} className="w-full h-full object-cover mix-blend-multiply" />
+              <div key={item.id} className="flex gap-4 p-4 rounded-xl border border-gray-100 dark:border-neutral-800 hover:border-brand-primary/20 dark:hover:border-brand-primary/30 transition-colors bg-white dark:bg-neutral-950 shadow-sm">
+                <div className="w-20 h-20 shrink-0 bg-brand-light/30 dark:bg-neutral-800 rounded-lg p-2 border border-brand-primary/5 dark:border-neutral-700">
+                  <img src={item.image} alt={item.name} className="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal" />
                 </div>
                 <div className="flex-grow flex flex-col justify-between">
                   <div>
-                    <h4 className="font-serif text-brand-dark leading-tight mb-1">{item.name}</h4>
+                    <h4 className="font-serif text-brand-dark dark:text-neutral-100 leading-tight mb-1">{item.name}</h4>
                     <p className="text-xs text-brand-primary font-bold">{formatPrice(item.price)}</p>
                   </div>
                   
                   <div className="flex items-center justify-between mt-3">
-                    <div className="flex items-center gap-3 bg-gray-50 rounded-full px-2 py-1 border border-gray-200">
+                    <div className="flex items-center gap-3 bg-gray-50 dark:bg-neutral-800 rounded-full px-2 py-1 border border-gray-200 dark:border-neutral-700">
                       <button 
                         onClick={() => onUpdateQuantity(item.id, -1)}
                         className="p-1 hover:text-brand-primary disabled:opacity-30"
@@ -99,10 +99,10 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         </div>
 
         {cart.length > 0 && (
-          <div className="p-6 border-t border-gray-100 bg-surface-warm">
+          <div className="p-6 border-t border-gray-100 dark:border-neutral-800 bg-surface-warm dark:bg-neutral-950">
             <div className="flex justify-between items-end mb-6">
-              <span className="text-sm text-neutral-500 font-light">{t.cart.subtotal}</span>
-              <span className="text-2xl font-serif text-brand-dark">{formatPrice(total)}</span>
+              <span className="text-sm text-neutral-500 dark:text-neutral-400 font-light">{t.cart.subtotal}</span>
+              <span className="text-2xl font-serif text-brand-dark dark:text-neutral-100">{formatPrice(total)}</span>
             </div>
             <Button fullWidth className="py-4 shadow-lg shadow-brand-primary/10 flex justify-between items-center group">
               {t.cart.checkout}

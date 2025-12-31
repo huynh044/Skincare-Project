@@ -58,20 +58,20 @@ const Quiz: React.FC<QuizProps> = ({ onComplete, language }) => {
         onClick={() => handleSelect(key, value)}
         className={`w-full text-left p-6 rounded-xl border-2 transition-all flex items-center gap-5 group
           ${isSelected 
-            ? 'border-brand-primary bg-brand-light/20 shadow-sm' 
-            : 'border-white bg-white hover:border-brand-primary/30 hover:bg-white/80 shadow-soft'}`}
+            ? 'border-brand-primary bg-brand-light/20 dark:bg-brand-primary/10 shadow-sm' 
+            : 'border-white dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-brand-primary/30 dark:hover:border-brand-primary/30 hover:bg-white/80 dark:hover:bg-neutral-800 shadow-soft'}`}
       >
         {icon && (
-          <div className={`p-3 rounded-full transition-colors ${isSelected ? 'bg-brand-primary text-white' : 'bg-brand-light text-brand-primary group-hover:bg-brand-primary/10'}`}>
+          <div className={`p-3 rounded-full transition-colors ${isSelected ? 'bg-brand-primary text-white' : 'bg-brand-light dark:bg-neutral-800 text-brand-primary group-hover:bg-brand-primary/10'}`}>
             {icon}
           </div>
         )}
         <div className="flex-grow">
           <div className="flex justify-between items-center mb-1">
-             <span className={`font-serif text-lg ${isSelected ? 'text-brand-dark' : 'text-neutral-700'}`}>{label}</span>
+             <span className={`font-serif text-lg ${isSelected ? 'text-brand-dark dark:text-white' : 'text-neutral-700 dark:text-neutral-300'}`}>{label}</span>
              {isSelected && <div className="bg-brand-primary text-white p-1 rounded-full"><Check size={14} /></div>}
           </div>
-          {description && <p className="text-sm text-neutral-500 font-light">{description}</p>}
+          {description && <p className="text-sm text-neutral-500 dark:text-neutral-400 font-light">{description}</p>}
         </div>
       </button>
     );
@@ -109,10 +109,10 @@ const Quiz: React.FC<QuizProps> = ({ onComplete, language }) => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4 animate-fade-in">
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4 animate-fade-in text-brand-dark dark:text-neutral-200">
         <Loader2 className="animate-spin mb-6 text-brand-primary" size={48} />
-        <h3 className="text-2xl font-serif text-brand-dark mb-2">{t.loadingTitle}</h3>
-        <p className="text-neutral-500 max-w-md text-sm leading-relaxed">
+        <h3 className="text-2xl font-serif mb-2">{t.loadingTitle}</h3>
+        <p className="text-neutral-500 dark:text-neutral-400 max-w-md text-sm leading-relaxed">
           {t.loadingDesc}
         </p>
       </div>
@@ -123,11 +123,11 @@ const Quiz: React.FC<QuizProps> = ({ onComplete, language }) => {
     <div className="max-w-3xl mx-auto py-16 px-6 animate-fade-in">
       {/* Progress Bar */}
       <div className="mb-12">
-        <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.2em] text-brand-primary/60 mb-3">
+        <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.2em] text-brand-primary/60 dark:text-brand-primary/80 mb-3">
           <span>{t.step} {step} / 4</span>
           <span>{t.profileBuilder}</span>
         </div>
-        <div className="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
+        <div className="w-full bg-gray-200 dark:bg-neutral-800 h-1.5 rounded-full overflow-hidden">
           <div 
             className="bg-brand-primary h-full transition-all duration-700 ease-out rounded-full" 
             style={{ width: `${(step / 4) * 100}%` }}
@@ -139,8 +139,8 @@ const Quiz: React.FC<QuizProps> = ({ onComplete, language }) => {
       {step === 1 && (
         <div className="space-y-8 animate-fade-in">
           <div>
-            <h2 className="text-3xl md:text-4xl font-serif text-brand-dark mb-3">{t.s1.title}</h2>
-            <p className="text-neutral-500 leading-relaxed">{t.s1.desc}</p>
+            <h2 className="text-3xl md:text-4xl font-serif text-brand-dark dark:text-white mb-3">{t.s1.title}</h2>
+            <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed">{t.s1.desc}</p>
           </div>
           <div className="grid gap-4">
             {renderOption('skinType', 'oily', t.s1.oily, undefined, <Droplets size={20}/>)}
@@ -155,8 +155,8 @@ const Quiz: React.FC<QuizProps> = ({ onComplete, language }) => {
       {step === 2 && (
         <div className="space-y-8 animate-fade-in">
           <div>
-             <h2 className="text-3xl md:text-4xl font-serif text-brand-dark mb-3">{t.s2.title}</h2>
-             <p className="text-neutral-500 leading-relaxed">{t.s2.desc}</p>
+             <h2 className="text-3xl md:text-4xl font-serif text-brand-dark dark:text-white mb-3">{t.s2.title}</h2>
+             <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed">{t.s2.desc}</p>
           </div>
           <div className="grid grid-cols-2 gap-6">
             {renderVisualOption('acne', t.s2.acne, 'https://images.unsplash.com/photo-1550575118-287ae49e45b3?q=80&w=600&auto=format&fit=crop')}
@@ -170,8 +170,8 @@ const Quiz: React.FC<QuizProps> = ({ onComplete, language }) => {
       {/* Step 3: Sensitivity */}
       {step === 3 && (
         <div className="space-y-8 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-serif text-brand-dark mb-3">{t.s3.title}</h2>
-          <div className="bg-blue-50/50 p-5 rounded-lg text-blue-800 text-sm flex gap-3 items-start border border-blue-100/50">
+          <h2 className="text-3xl md:text-4xl font-serif text-brand-dark dark:text-white mb-3">{t.s3.title}</h2>
+          <div className="bg-blue-50/50 dark:bg-blue-900/20 p-5 rounded-lg text-blue-800 dark:text-blue-200 text-sm flex gap-3 items-start border border-blue-100/50 dark:border-blue-900/30">
              <AlertCircle size={20} className="mt-0.5 shrink-0"/>
              <span className="leading-relaxed">{t.s3.warning}</span>
           </div>
@@ -186,8 +186,8 @@ const Quiz: React.FC<QuizProps> = ({ onComplete, language }) => {
       {step === 4 && (
         <div className="space-y-8 animate-fade-in">
            <div>
-            <h2 className="text-3xl md:text-4xl font-serif text-brand-dark mb-3">{t.s4.title}</h2>
-            <p className="text-neutral-500 leading-relaxed">{t.s4.desc}</p>
+            <h2 className="text-3xl md:text-4xl font-serif text-brand-dark dark:text-white mb-3">{t.s4.title}</h2>
+            <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed">{t.s4.desc}</p>
            </div>
           <div className="space-y-4">
             {renderOption('experience', 'beginner', t.s4.beg, t.s4.begDesc, <div className="text-sm font-bold border border-current rounded px-1.5 py-0.5">1</div>)}
@@ -197,7 +197,7 @@ const Quiz: React.FC<QuizProps> = ({ onComplete, language }) => {
         </div>
       )}
 
-      <div className="mt-10 pt-10 border-t border-gray-100 flex justify-end">
+      <div className="mt-10 pt-10 border-t border-gray-100 dark:border-neutral-800 flex justify-end">
         <Button 
           onClick={handleNext} 
           disabled={
