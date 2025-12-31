@@ -20,19 +20,19 @@
               'clinical-gray': '#f4f4f5',
               'clinical-border': '#e4e4e7',
               
-              // Enhanced Palette
-              'brand-primary': '#2A5C55', // Richer Teal Green
-              'brand-dark': '#142C28',    // Deep Forest
-              'brand-light': '#F0F7F4',   // Minty White
-              'brand-accent': '#D98E73',  // Terracotta/Coral (Warmth)
-              'brand-secondary': '#EBC05C', // Muted Gold
+              // Enhanced Palette: Red-Pink / Cosmetic
+              'brand-primary': '#D6405E', // Vibrant Red-Pink (Rose)
+              'brand-dark': '#851E32',    // Deep Berry/Wine
+              'brand-light': '#FDF0F3',   // Light Blush/Rose Water
+              'brand-accent': '#F28C98',  // Soft Pink/Coral
+              'brand-secondary': '#FFCDB2', // Muted Peach
               'surface-warm': '#FFFCF8',  // Cream
               'surface-highlight': '#FFFFFF',
             },
             boxShadow: {
-              'soft': '0 8px 30px -4px rgba(42, 92, 85, 0.08)',
-              'hover': '0 20px 40px -8px rgba(42, 92, 85, 0.12)',
-              'glow': '0 0 20px rgba(217, 142, 115, 0.3)',
+              'soft': '0 8px 30px -4px rgba(214, 64, 94, 0.08)',
+              'hover': '0 20px 40px -8px rgba(214, 64, 94, 0.12)',
+              'glow': '0 0 20px rgba(242, 140, 152, 0.3)',
             }
           },
         },
@@ -60,17 +60,19 @@
   <script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0"
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
+    "vite": "https://esm.sh/vite@^7.3.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
 </head>
   <body>
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>

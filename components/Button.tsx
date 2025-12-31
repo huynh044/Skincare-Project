@@ -16,9 +16,9 @@ export const Button: React.FC<ButtonProps> = ({
   
   const variants = {
     primary: "bg-brand-primary text-white hover:bg-brand-dark shadow-sm hover:shadow-md",
-    secondary: "bg-brand-light text-brand-primary hover:bg-[#D1E0DA]",
+    secondary: "bg-brand-light text-brand-primary hover:bg-[#FADADD]", // Updated hover to match pink theme
     outline: "border border-brand-primary/30 text-brand-primary hover:bg-brand-primary hover:text-white",
-    accent: "bg-brand-accent text-white hover:bg-[#C39363]"
+    accent: "bg-brand-accent text-white hover:bg-[#D9707C]" // Updated hover to match pink theme
   };
 
   return (
