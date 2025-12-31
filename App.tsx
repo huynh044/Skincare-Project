@@ -2,13 +2,160 @@ import React, { useState, useEffect } from 'react';
 import { HashRouter, Routes, Route, Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { PageView, RoutineBundle, Language, CartItem, Product } from './types';
 import { ROUTINES, PRODUCTS } from './constants';
-import { Menu, X, Microscope, ArrowRight, Shield, Beaker, Sun, Moon, Info, Sparkles, Globe, Leaf, ImageOff, ShoppingBag, Droplets, FlaskConical, Star, Plus } from 'lucide-react';
+import { Menu, X, Microscope, ArrowRight, Shield, Beaker, Sun, Moon, Info, Sparkles, Globe, Leaf, ImageOff, ShoppingBag, Droplets, FlaskConical, Star, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 import Quiz from './pages/Quiz';
 import { RoutineCard } from './components/RoutineCard';
 import { Button } from './components/Button';
 import { CartDrawer } from './components/CartDrawer';
 import { chatWithDermBot } from './services/geminiService';
 import { TEXTS } from './locales';
+
+// --- Hero Slider Component ---
+const HeroSlider = ({ onStartQuiz, language }: { onStartQuiz: () => void, language: Language }) => {
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const t = TEXTS[language];
+
+    const slides = [
+        {
+            id: 1,
+            title: t.hero.title,
+            subtitle: t.hero.subtitle,
+            desc: t.hero.desc,
+            image: PRODUCTS.NIACINAMIDE.image,
+            bgColor: "bg-rose-50 dark:bg-rose-950/30",
+            accentColor: "text-brand-primary",
+            activeTag: "Sebum Control",
+            ph: "pH 5.50"
+        },
+        {
+            id: 2,
+            title: language === 'vn' ? "Phục hồi độ ẩm" : "Restore Hydration",
+            subtitle: language === 'vn' ? "Cấp nước đa tầng" : "Multi-Depth Hydration",
+            desc: language === 'vn' ? "Axit Hyaluronic siêu tinh khiết giúp da căng mọng ngay lập tức mà không gây nhờn rít." : "Ultra-pure Hyaluronic Acid provides instant plumping hydration without greasiness.",
+            image: PRODUCTS.HA_B5.image,
+            bgColor: "bg-blue-50 dark:bg-slate-900/50",
+            accentColor: "text-blue-500",
+            activeTag: "Hydration",
+            ph: "pH 6.50"
+        },
+        {
+            id: 3,
+            title: language === 'vn' ? "Tái tạo bề mặt" : "Resurface & Glow",
+            subtitle: language === 'vn' ? "Sáng da mờ thâm" : "Radiance Boosting",
+            desc: language === 'vn' ? "Tẩy tế bào chết nhẹ nhàng với Glycolic Acid 7% để mang lại làn da tươi sáng, đều màu hơn." : "Gentle exfoliation with 7% Glycolic Acid to reveal brighter, more even-toned skin.",
+            image: PRODUCTS.GLYCOLIC_TONER.image,
+            bgColor: "bg-amber-50 dark:bg-yellow-950/20",
+            accentColor: "text-amber-500",
+            activeTag: "Exfoliation",
+            ph: "pH 3.60"
+        }
+    ];
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % slides.length);
+        }, 6000);
+        return () => clearInterval(timer);
+    }, [slides.length]);
+
+    const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
+    const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+
+    return (
+        <div className="relative w-full h-[650px] md:h-[750px] overflow-hidden bg-white dark:bg-neutral-950 transition-colors duration-500 group">
+            
+            {slides.map((slide, index) => (
+                <div 
+                    key={slide.id}
+                    className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out flex items-center ${
+                        index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                    } ${slide.bgColor}`}
+                >
+                    {/* Background Pattern/Elements */}
+                    <div className="absolute inset-0 overflow-hidden">
+                        <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-white/40 to-transparent dark:from-black/40"></div>
+                        <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-white/40 dark:bg-white/5 rounded-full blur-3xl"></div>
+                    </div>
+
+                    <div className="max-w-7xl mx-auto px-6 w-full grid md:grid-cols-2 gap-12 items-center relative z-20">
+                        {/* Text Content */}
+                        <div className={`space-y-8 transform transition-all duration-1000 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 dark:bg-neutral-900/80 backdrop-blur text-brand-dark dark:text-neutral-200 text-[10px] uppercase tracking-[0.2em] font-bold rounded-full border border-gray-100 dark:border-neutral-700 shadow-sm">
+                                <Microscope size={12} className={slide.accentColor} /> 
+                                {t.hero.tag}
+                            </div>
+                            
+                            <h1 className="text-5xl md:text-7xl font-serif text-brand-dark dark:text-neutral-100 leading-tight">
+                                {slide.title} <br/>
+                                <span className={`${slide.accentColor} italic`}>{slide.subtitle}</span>
+                            </h1>
+                            
+                            <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-lg leading-relaxed font-light">
+                                {slide.desc}
+                            </p>
+                            
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <Button onClick={onStartQuiz} className="min-w-[200px] shadow-glow hover:shadow-lg transition-all">{t.hero.ctaPrimary}</Button>
+                                <Link to="/routines">
+                                    <Button variant="outline" className="min-w-[200px] border-brand-dark/20 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-white dark:hover:text-brand-dark hover:bg-white">{t.hero.ctaSecondary}</Button>
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Image Side */}
+                        <div className="relative h-[400px] md:h-[600px] flex items-center justify-center">
+                            {/* Floating Tech Specs */}
+                            <div className={`absolute top-10 right-0 md:right-10 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md p-4 rounded-xl shadow-soft border border-gray-100 dark:border-neutral-800 z-30 transform transition-all duration-1000 delay-300 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+                                <div className={`flex items-center gap-2 mb-2 ${slide.accentColor}`}>
+                                    <FlaskConical size={16} />
+                                    <span className="text-[10px] font-bold uppercase">Active</span>
+                                </div>
+                                <p className="text-xs font-serif text-brand-dark dark:text-neutral-200 leading-tight">{slide.activeTag}</p>
+                            </div>
+
+                            <div className={`absolute bottom-20 left-0 md:left-10 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md p-4 rounded-xl shadow-soft border border-gray-100 dark:border-neutral-800 z-30 transform transition-all duration-1000 delay-500 ${index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+                                <div className={`flex items-center gap-2 mb-2 ${slide.accentColor}`}>
+                                    <Droplets size={16} />
+                                    <span className="text-[10px] font-bold uppercase">pH Level</span>
+                                </div>
+                                <p className="text-xs font-serif text-brand-dark dark:text-neutral-200 leading-tight">{slide.ph}</p>
+                            </div>
+
+                            {/* Main Image with Ken Burns Effect */}
+                            <div className="relative w-full h-full flex items-center justify-center">
+                                <div className={`absolute inset-0 bg-gradient-to-b from-transparent to-white/20 dark:to-black/20 rounded-full blur-3xl transform scale-75 ${index === currentSlide ? 'animate-pulse' : ''}`}></div>
+                                <img 
+                                    src={slide.image} 
+                                    alt={slide.title}
+                                    className={`relative w-auto h-[80%] md:h-[90%] object-contain drop-shadow-2xl filter contrast-105 transform transition-transform duration-[20s] ease-linear ${index === currentSlide ? 'scale-110 translate-y-[-10px]' : 'scale-100'}`}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+
+            {/* Navigation Dots */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+                {slides.map((_, idx) => (
+                    <button 
+                        key={idx}
+                        onClick={() => setCurrentSlide(idx)}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === currentSlide ? 'w-8 bg-brand-primary' : 'bg-gray-300 dark:bg-neutral-700 hover:bg-brand-primary/50'}`}
+                    />
+                ))}
+            </div>
+
+            {/* Nav Arrows */}
+            <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-white/50 dark:bg-black/20 hover:bg-white dark:hover:bg-neutral-800 backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 text-brand-dark dark:text-white">
+                <ChevronLeft size={24} />
+            </button>
+            <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-white/50 dark:bg-black/20 hover:bg-white dark:hover:bg-neutral-800 backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 text-brand-dark dark:text-white">
+                <ChevronRight size={24} />
+            </button>
+        </div>
+    );
+};
 
 // --- Sub-components for pages ---
 
@@ -21,82 +168,11 @@ const Home = ({ onStartQuiz, language, onAddToCart }: { onStartQuiz: () => void,
 
   return (
     <div className="animate-fade-in">
-      {/* Hero Section */}
-      <section className="relative pt-12 md:pt-20 pb-20 md:pb-32 px-6 overflow-hidden bg-gradient-to-b from-brand-light/30 to-surface-warm dark:from-brand-dark/20 dark:to-neutral-950 transition-colors duration-500">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          
-          {/* Left: Text Content */}
-          <div className="relative z-10 text-center md:text-left order-2 md:order-1">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white dark:bg-neutral-900 text-brand-primary text-[10px] uppercase tracking-[0.2em] font-bold rounded-full mb-8 border border-brand-primary/10 dark:border-brand-primary/20 shadow-sm animate-fade-in transition-colors">
-              <Microscope size={12} /> {t.hero.tag}
-            </div>
-            <h1 className="text-5xl md:text-7xl font-serif text-brand-dark dark:text-brand-light mb-8 leading-tight transition-colors">
-              {t.hero.title} <br/>
-              <span className="text-brand-primary italic relative inline-block">
-                 {t.hero.subtitle}
-                 <svg className="absolute w-full h-3 -bottom-2 left-0 text-brand-accent/30" viewBox="0 0 100 10" preserveAspectRatio="none">
-                   <path d="M0 5 Q 50 15 100 5" stroke="currentColor" strokeWidth="3" fill="none" />
-                 </svg>
-              </span>
-            </h1>
-            <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-10 max-w-xl mx-auto md:mx-0 leading-relaxed font-light transition-colors">
-              {t.hero.desc}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-              <Button onClick={onStartQuiz} className="min-w-[200px] shadow-glow hover:shadow-lg transition-all">{t.hero.ctaPrimary}</Button>
-              <Link to="/routines">
-                 <Button variant="outline" className="min-w-[200px] border-brand-dark/20 dark:border-brand-light/20 dark:text-brand-light dark:hover:bg-brand-light dark:hover:text-brand-primary hover:bg-white">{t.hero.ctaSecondary}</Button>
-              </Link>
-            </div>
-          </div>
-
-          {/* Right: Product Visual Stage */}
-          <div className="relative z-10 h-[400px] md:h-[600px] flex items-center justify-center order-1 md:order-2">
-             {/* Background Blob */}
-             <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-brand-primary/5 dark:bg-brand-primary/10 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute w-[250px] h-[250px] border border-brand-primary/10 dark:border-brand-primary/20 rounded-full animate-spin-slow"></div>
-                <div className="absolute w-[350px] h-[350px] border border-dashed border-brand-primary/10 dark:border-brand-primary/20 rounded-full animate-spin-slow" style={{animationDirection: 'reverse'}}></div>
-             </div>
-
-             {/* Main Hero Product (Floating) */}
-             <div className="relative w-48 md:w-64 animate-float z-20">
-                <img 
-                  src={PRODUCTS.NIACINAMIDE.image} 
-                  alt="Niacinamide 10% + Zinc 1%" 
-                  className="w-full h-auto drop-shadow-2xl rounded-xl"
-                  style={{ filter: 'contrast(1.05)' }}
-                />
-                
-                {/* Product Shadow */}
-                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-32 h-4 bg-black/20 dark:bg-black/50 blur-xl rounded-full"></div>
-             </div>
-
-             {/* Floating Science Card 1 (Top Right) */}
-             <div className="absolute top-10 right-0 md:right-10 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md p-4 rounded-xl shadow-soft border border-brand-primary/10 dark:border-neutral-800 animate-float-delayed max-w-[140px] transition-colors">
-                <div className="flex items-center gap-2 mb-2 text-brand-primary">
-                   <FlaskConical size={16} />
-                   <span className="text-[10px] font-bold uppercase">Active</span>
-                </div>
-                <p className="text-xs font-serif text-brand-dark dark:text-neutral-200 leading-tight">Niacinamide 10%</p>
-                <p className="text-[10px] text-neutral-500 mt-1">Regulates Sebum</p>
-             </div>
-
-             {/* Floating Science Card 2 (Bottom Left) */}
-             <div className="absolute bottom-20 left-0 md:left-10 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md p-4 rounded-xl shadow-soft border border-brand-primary/10 dark:border-neutral-800 animate-float max-w-[140px] transition-colors">
-                <div className="flex items-center gap-2 mb-2 text-brand-accent">
-                   <Droplets size={16} />
-                   <span className="text-[10px] font-bold uppercase">pH Level</span>
-                </div>
-                <p className="text-xs font-serif text-brand-dark dark:text-neutral-200 leading-tight">5.50 - 6.50</p>
-                <p className="text-[10px] text-neutral-500 mt-1">Balanced for skin</p>
-             </div>
-          </div>
-        </div>
-      </section>
+      {/* Replaced static Hero with Dynamic Slider */}
+      <HeroSlider onStartQuiz={onStartQuiz} language={language} />
 
       {/* Value Props */}
-      <section className="py-24 px-6 bg-white dark:bg-neutral-900 border-y border-brand-primary/5 dark:border-neutral-800 relative z-20 -mt-10 md:-mt-20 rounded-t-[3rem] shadow-soft transition-colors duration-500">
+      <section className="py-24 px-6 bg-white dark:bg-neutral-900 border-y border-brand-primary/5 dark:border-neutral-800 relative z-20 transition-colors duration-500">
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
           <div className="space-y-4 p-8 rounded-2xl hover:bg-brand-light/40 dark:hover:bg-brand-dark/10 transition-colors duration-500 group">
             <div className="w-14 h-14 bg-brand-light dark:bg-neutral-800 text-brand-primary flex items-center justify-center mb-4 rounded-full group-hover:scale-110 transition-transform">

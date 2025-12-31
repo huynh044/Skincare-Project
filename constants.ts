@@ -12,7 +12,7 @@ export const PRODUCTS: Record<string, Product> = {
     format: 'Emulsion',
     phLevel: '5.50-6.50',
     // Specific URL provided by user
-    image: 'https://ordinary.com.vn/wp-content/uploads/2020/09/The-Ordinary-Squalane-Cleanser-50ml-510x510.jpg',
+    image: 'https://ordinary.com.vn/wp-content/uploads/2022/11/the-ordinary-niacinamide-10-zinc-1-30ml-510x510.jpg',
     price: 290000
   },
   NIACINAMIDE: {
@@ -27,7 +27,7 @@ export const PRODUCTS: Record<string, Product> = {
     format: 'Water-based Serum',
     phLevel: '5.00-6.50',
     // Minimalist dropper bottle
-    image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600&auto=format&fit=crop',
+    image: 'https://ordinary.com.vn/wp-content/uploads/2022/09/the-ordinary-salicylic-acid-2-masque-50ml-247x296.jpg',
     price: 320000
   },
   HA_B5: {
@@ -86,7 +86,7 @@ export const PRODUCTS: Record<string, Product> = {
     format: 'Liquid',
     phLevel: '3.50-3.70',
     // Toner bottle style
-    image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?q=80&w=600&auto=format&fit=crop',
+    image: 'https://ordinary.com.vn/wp-content/uploads/2020/09/nuoc-hoa-hong-The-Ordinary-Glycolic-Acid-7-Toning-Solution-ph-3.6-240ml-510x510.jpg',
     price: 350000
   },
   RETINOL_02: {
@@ -102,6 +102,20 @@ export const PRODUCTS: Record<string, Product> = {
     // Amber/Dark bottle
     image: 'https://images.unsplash.com/photo-1631730486784-5456119f69ae?q=80&w=600&auto=format&fit=crop',
     price: 270000
+  },
+  MINERAL_UV: {
+    id: 'p8',
+    name: 'Mineral UV Filters SPF 30 with Antioxidants',
+    type: 'Sunscreen',
+    description: {
+      en: 'Broad spectrum SPF protection with antioxidant support.',
+      vn: 'Bảo vệ phổ rộng SPF với sự hỗ trợ của chất chống oxy hóa.'
+    },
+    format: 'Cream',
+    phLevel: '7.00-8.50',
+    // Sunscreen tube
+    image: 'https://theordinary.com/on/demandware.static/-/Library-Sites-DeciemSharedLibrary/default/dw9bd562e0/theordinary/gridbreakers/2025-09-15-Always-On-Grid-Breakers-which-antioxidant-blog.jpg',
+    price: 390000
   }
 };
 
@@ -123,9 +137,11 @@ export const ROUTINES: RoutineBundle[] = [
       { order: 1, timeOfDay: 'AM', product: PRODUCTS.SQUALANE_CLEANSER, instruction: { en: 'Cleanse gently.', vn: 'Rửa mặt nhẹ nhàng.' } },
       { order: 2, timeOfDay: 'AM', product: PRODUCTS.NIACINAMIDE, instruction: { en: 'Apply a few drops to entire face.', vn: 'Thoa vài giọt lên toàn bộ khuôn mặt.' } },
       { order: 3, timeOfDay: 'AM', product: PRODUCTS.MOISTURIZER_FACTORS, instruction: { en: 'Apply to lock in hydration.', vn: 'Thoa để khóa ẩm.' } },
-      { order: 4, timeOfDay: 'PM', product: PRODUCTS.SQUALANE_CLEANSER, instruction: { en: 'Double cleanse if wearing makeup.', vn: 'Rửa mặt kép nếu trang điểm.' } },
-      { order: 5, timeOfDay: 'PM', product: PRODUCTS.SALICYLIC_ACID, instruction: { en: 'Apply directly to spots or congested areas.', vn: 'Chấm trực tiếp lên mụn hoặc vùng da tắc nghẽn.' } },
-      { order: 6, timeOfDay: 'PM', product: PRODUCTS.MOISTURIZER_FACTORS, instruction: { en: 'Finish with moisturizer.', vn: 'Kết thúc với kem dưỡng ẩm.' } },
+      { order: 4, timeOfDay: 'AM', product: PRODUCTS.MINERAL_UV, instruction: { en: 'Apply liberally 15 mins before sun exposure.', vn: 'Thoa đều 15 phút trước khi ra nắng.' } },
+      
+      { order: 5, timeOfDay: 'PM', product: PRODUCTS.SQUALANE_CLEANSER, instruction: { en: 'Double cleanse if wearing makeup.', vn: 'Rửa mặt kép nếu trang điểm.' } },
+      { order: 6, timeOfDay: 'PM', product: PRODUCTS.SALICYLIC_ACID, instruction: { en: 'Apply directly to spots or congested areas.', vn: 'Chấm trực tiếp lên mụn hoặc vùng da tắc nghẽn.' } },
+      { order: 7, timeOfDay: 'PM', product: PRODUCTS.MOISTURIZER_FACTORS, instruction: { en: 'Finish with moisturizer.', vn: 'Kết thúc với kem dưỡng ẩm.' } },
     ]
   },
   {
@@ -144,6 +160,7 @@ export const ROUTINES: RoutineBundle[] = [
       { order: 1, timeOfDay: 'BOTH', product: PRODUCTS.SQUALANE_CLEANSER, instruction: { en: 'Massage into dry face, then rinse.', vn: 'Massage lên mặt khô, sau đó rửa sạch.' } },
       { order: 2, timeOfDay: 'BOTH', product: PRODUCTS.HA_B5, instruction: { en: 'Apply to damp skin.', vn: 'Thoa lên da ẩm.' } },
       { order: 3, timeOfDay: 'BOTH', product: PRODUCTS.MOISTURIZER_FACTORS, instruction: { en: 'Apply generously.', vn: 'Thoa một lượng vừa đủ.' } },
+      { order: 4, timeOfDay: 'AM', product: PRODUCTS.MINERAL_UV, instruction: { en: 'Apply daily for protection.', vn: 'Thoa hàng ngày để bảo vệ.' } },
     ]
   },
   {
@@ -162,10 +179,12 @@ export const ROUTINES: RoutineBundle[] = [
       { order: 1, timeOfDay: 'AM', product: PRODUCTS.SQUALANE_CLEANSER, instruction: { en: 'Cleanse.', vn: 'Rửa mặt.' } },
       { order: 2, timeOfDay: 'AM', product: PRODUCTS.HA_B5, instruction: { en: 'Hydrate.', vn: 'Cấp ẩm.' } },
       { order: 3, timeOfDay: 'AM', product: PRODUCTS.MOISTURIZER_FACTORS, instruction: { en: 'Seal.', vn: 'Khóa ẩm.' } },
-      { order: 4, timeOfDay: 'PM', product: PRODUCTS.SQUALANE_CLEANSER, instruction: { en: 'Cleanse.', vn: 'Rửa mặt.' } },
-      { order: 5, timeOfDay: 'PM', product: PRODUCTS.GLYCOLIC_TONER, instruction: { en: 'Swipe with cotton pad (Alternate nights).', vn: 'Lau bằng bông tẩy trang (Cách đêm).' } },
-      { order: 6, timeOfDay: 'PM', product: PRODUCTS.RETINOL_02, instruction: { en: 'Apply small amount (Alternate nights).', vn: 'Thoa một lượng nhỏ (Cách đêm).' } },
-      { order: 7, timeOfDay: 'PM', product: PRODUCTS.MOISTURIZER_FACTORS, instruction: { en: 'Seal.', vn: 'Khóa ẩm.' } },
+      { order: 4, timeOfDay: 'AM', product: PRODUCTS.MINERAL_UV, instruction: { en: 'Essential step when using Retinoids.', vn: 'Bước thiết yếu khi dùng Retinoid.' } },
+      
+      { order: 5, timeOfDay: 'PM', product: PRODUCTS.SQUALANE_CLEANSER, instruction: { en: 'Cleanse.', vn: 'Rửa mặt.' } },
+      { order: 6, timeOfDay: 'PM', product: PRODUCTS.GLYCOLIC_TONER, instruction: { en: 'Swipe with cotton pad (Alternate nights).', vn: 'Lau bằng bông tẩy trang (Cách đêm).' } },
+      { order: 7, timeOfDay: 'PM', product: PRODUCTS.RETINOL_02, instruction: { en: 'Apply small amount (Alternate nights).', vn: 'Thoa một lượng nhỏ (Cách đêm).' } },
+      { order: 8, timeOfDay: 'PM', product: PRODUCTS.MOISTURIZER_FACTORS, instruction: { en: 'Seal.', vn: 'Khóa ẩm.' } },
     ]
   }
 ];
