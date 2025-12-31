@@ -42,7 +42,7 @@ export const PRODUCTS: Record<string, Product> = {
     format: 'Water-based Serum',
     phLevel: '6.50-7.50',
     // Clear serum dropper
-    image: 'https://images.unsplash.com/photo-1608248597279-f99d160bfbc8?q=80&w=600&auto=format&fit=crop',
+    image: 'https://ordinary.com.vn/wp-content/uploads/2022/09/the-ordinary-hyaluronic-acid-510x510.jpg',
     price: 280000
   },
   MOISTURIZER_FACTORS: {

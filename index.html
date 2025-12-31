@@ -33,6 +33,17 @@
               'soft': '0 8px 30px -4px rgba(214, 64, 94, 0.08)',
               'hover': '0 20px 40px -8px rgba(214, 64, 94, 0.12)',
               'glow': '0 0 20px rgba(242, 140, 152, 0.3)',
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'float-delayed': 'float 6s ease-in-out 3s infinite',
+              'spin-slow': 'spin 12s linear infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              }
             }
           },
         },

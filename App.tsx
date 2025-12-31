@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { HashRouter, Routes, Route, Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { PageView, RoutineBundle, Language, CartItem, Product } from './types';
-import { ROUTINES } from './constants';
-import { Menu, X, Microscope, ArrowRight, Shield, Beaker, Sun, Moon, Info, Sparkles, Globe, Leaf, ImageOff, ShoppingBag } from 'lucide-react';
+import { ROUTINES, PRODUCTS } from './constants';
+import { Menu, X, Microscope, ArrowRight, Shield, Beaker, Sun, Moon, Info, Sparkles, Globe, Leaf, ImageOff, ShoppingBag, Droplets, FlaskConical, Star, Plus } from 'lucide-react';
 import Quiz from './pages/Quiz';
 import { RoutineCard } from './components/RoutineCard';
 import { Button } from './components/Button';
@@ -12,43 +12,91 @@ import { TEXTS } from './locales';
 
 // --- Sub-components for pages ---
 
-const Home = ({ onStartQuiz, language }: { onStartQuiz: () => void, language: Language }) => {
+const Home = ({ onStartQuiz, language, onAddToCart }: { onStartQuiz: () => void, language: Language, onAddToCart: (p: Product) => void }) => {
   const t = TEXTS[language];
+  const navigate = useNavigate();
+  
+  // Select specific products for the spotlight section
+  const spotlightProducts = [PRODUCTS.NIACINAMIDE, PRODUCTS.HA_B5, PRODUCTS.GLYCOLIC_TONER];
+
   return (
     <div className="animate-fade-in">
-      {/* Hero */}
-      <section className="relative pt-24 pb-40 px-6 overflow-hidden bg-brand-light/30">
-        {/* Abstract Background Element */}
-        <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-brand-accent/5 to-transparent -z-10 rounded-l-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-brand-primary/5 -z-10 rounded-r-full blur-3xl"></div>
-
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white text-brand-primary text-[10px] uppercase tracking-[0.2em] font-bold rounded-full mb-8 border border-brand-primary/10 shadow-sm">
-            <Microscope size={12} /> {t.hero.tag}
+      {/* Hero Section */}
+      <section className="relative pt-12 md:pt-20 pb-20 md:pb-32 px-6 overflow-hidden bg-gradient-to-b from-brand-light/30 to-surface-warm">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          
+          {/* Left: Text Content */}
+          <div className="relative z-10 text-center md:text-left order-2 md:order-1">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white text-brand-primary text-[10px] uppercase tracking-[0.2em] font-bold rounded-full mb-8 border border-brand-primary/10 shadow-sm animate-fade-in">
+              <Microscope size={12} /> {t.hero.tag}
+            </div>
+            <h1 className="text-5xl md:text-7xl font-serif text-brand-dark mb-8 leading-tight">
+              {t.hero.title} <br/>
+              <span className="text-brand-primary italic relative inline-block">
+                 {t.hero.subtitle}
+                 <svg className="absolute w-full h-3 -bottom-2 left-0 text-brand-accent/30" viewBox="0 0 100 10" preserveAspectRatio="none">
+                   <path d="M0 5 Q 50 15 100 5" stroke="currentColor" strokeWidth="3" fill="none" />
+                 </svg>
+              </span>
+            </h1>
+            <p className="text-lg text-neutral-600 mb-10 max-w-xl mx-auto md:mx-0 leading-relaxed font-light">
+              {t.hero.desc}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <Button onClick={onStartQuiz} className="min-w-[200px] shadow-glow hover:shadow-lg transition-all">{t.hero.ctaPrimary}</Button>
+              <Link to="/routines">
+                 <Button variant="outline" className="min-w-[200px] border-brand-dark/20 hover:bg-white">{t.hero.ctaSecondary}</Button>
+              </Link>
+            </div>
           </div>
-          <h1 className="text-5xl md:text-7xl font-serif text-brand-dark mb-8 leading-tight">
-            {t.hero.title} <br/>
-            <span className="text-brand-accent italic relative inline-block">
-               {t.hero.subtitle}
-               <svg className="absolute w-full h-3 -bottom-2 left-0 text-brand-accent/30" viewBox="0 0 100 10" preserveAspectRatio="none">
-                 <path d="M0 5 Q 50 15 100 5" stroke="currentColor" strokeWidth="3" fill="none" />
-               </svg>
-            </span>
-          </h1>
-          <p className="text-lg text-neutral-600 mb-12 max-w-2xl mx-auto leading-relaxed font-light">
-            {t.hero.desc}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button onClick={onStartQuiz} className="min-w-[200px] shadow-glow hover:shadow-lg transition-all">{t.hero.ctaPrimary}</Button>
-            <Link to="/routines">
-               <Button variant="outline" className="min-w-[200px] border-brand-dark/20 hover:bg-white">{t.hero.ctaSecondary}</Button>
-            </Link>
+
+          {/* Right: Product Visual Stage */}
+          <div className="relative z-10 h-[400px] md:h-[600px] flex items-center justify-center order-1 md:order-2">
+             {/* Background Blob */}
+             <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-brand-primary/5 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute w-[250px] h-[250px] border border-brand-primary/10 rounded-full animate-spin-slow"></div>
+                <div className="absolute w-[350px] h-[350px] border border-dashed border-brand-primary/10 rounded-full animate-spin-slow" style={{animationDirection: 'reverse'}}></div>
+             </div>
+
+             {/* Main Hero Product (Floating) */}
+             <div className="relative w-48 md:w-64 animate-float z-20">
+                <img 
+                  src={PRODUCTS.NIACINAMIDE.image} 
+                  alt="Niacinamide 10% + Zinc 1%" 
+                  className="w-full h-auto drop-shadow-2xl rounded-xl"
+                  style={{ filter: 'contrast(1.05)' }}
+                />
+                
+                {/* Product Shadow */}
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-32 h-4 bg-black/20 blur-xl rounded-full"></div>
+             </div>
+
+             {/* Floating Science Card 1 (Top Right) */}
+             <div className="absolute top-10 right-0 md:right-10 bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-soft border border-brand-primary/10 animate-float-delayed max-w-[140px]">
+                <div className="flex items-center gap-2 mb-2 text-brand-primary">
+                   <FlaskConical size={16} />
+                   <span className="text-[10px] font-bold uppercase">Active</span>
+                </div>
+                <p className="text-xs font-serif text-brand-dark leading-tight">Niacinamide 10%</p>
+                <p className="text-[10px] text-neutral-500 mt-1">Regulates Sebum</p>
+             </div>
+
+             {/* Floating Science Card 2 (Bottom Left) */}
+             <div className="absolute bottom-20 left-0 md:left-10 bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-soft border border-brand-primary/10 animate-float max-w-[140px]">
+                <div className="flex items-center gap-2 mb-2 text-brand-accent">
+                   <Droplets size={16} />
+                   <span className="text-[10px] font-bold uppercase">pH Level</span>
+                </div>
+                <p className="text-xs font-serif text-brand-dark leading-tight">5.50 - 6.50</p>
+                <p className="text-[10px] text-neutral-500 mt-1">Balanced for skin</p>
+             </div>
           </div>
         </div>
       </section>
 
       {/* Value Props */}
-      <section className="py-24 px-6 bg-white border-y border-brand-primary/5 relative z-20 -mt-10 rounded-t-[3rem] shadow-soft">
+      <section className="py-24 px-6 bg-white border-y border-brand-primary/5 relative z-20 -mt-10 md:-mt-20 rounded-t-[3rem] shadow-soft">
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
           <div className="space-y-4 p-8 rounded-2xl hover:bg-brand-light/40 transition-colors duration-500 group">
             <div className="w-14 h-14 bg-brand-light text-brand-primary flex items-center justify-center mb-4 rounded-full group-hover:scale-110 transition-transform">
@@ -80,6 +128,84 @@ const Home = ({ onStartQuiz, language }: { onStartQuiz: () => void, language: La
         </div>
       </section>
 
+      {/* NEW SECTION: Essential Molecules Spotlight */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-primary">The Foundation</span>
+            <h2 className="text-4xl md:text-5xl font-serif text-brand-dark mt-4 mb-4">Essential Molecules</h2>
+            <p className="text-neutral-500 max-w-2xl mx-auto">High-purity actives designed to target specific skin concerns effectively.</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {spotlightProducts.map((product) => (
+              <div key={product.id} className="group relative bg-surface-warm rounded-3xl p-8 border border-gray-100 transition-all duration-500 hover:shadow-hover hover:border-brand-primary/20 flex flex-col">
+                
+                {/* Lab Spec Badge */}
+                <div className="absolute top-6 right-6 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="bg-white/80 backdrop-blur border border-brand-primary/10 px-3 py-1 rounded text-[10px] font-mono text-brand-dark">
+                        pH: {product.phLevel || 'N/A'}
+                    </div>
+                </div>
+
+                {/* Image Container */}
+                <div className="relative h-64 mb-8 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-white rounded-2xl transform rotate-3 group-hover:rotate-6 transition-transform duration-500 border border-gray-100"></div>
+                  <img 
+                    src={product.image} 
+                    alt={product.name} 
+                    className="relative h-full w-auto object-contain drop-shadow-md transform group-hover:-translate-y-4 group-hover:scale-110 transition-transform duration-500 z-10"
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="flex-grow">
+                   <div className="flex justify-between items-start mb-2">
+                       <span className="text-[10px] font-bold uppercase tracking-wider text-brand-primary/80">{product.type}</span>
+                       <div className="flex gap-0.5 text-brand-accent">
+                          <Star size={10} fill="currentColor" />
+                          <Star size={10} fill="currentColor" />
+                          <Star size={10} fill="currentColor" />
+                          <Star size={10} fill="currentColor" />
+                          <Star size={10} fill="currentColor" />
+                       </div>
+                   </div>
+                   <h3 className="text-xl font-serif text-brand-dark mb-3 group-hover:text-brand-primary transition-colors">{product.name}</h3>
+                   <p className="text-sm text-neutral-500 leading-relaxed mb-4 line-clamp-3">
+                     {product.description[language]}
+                   </p>
+                   
+                   {/* Tech Specs */}
+                   <div className="grid grid-cols-2 gap-2 mb-6">
+                      <div className="bg-white px-3 py-2 rounded border border-gray-100">
+                        <span className="block text-[10px] text-gray-400 uppercase">Format</span>
+                        <span className="text-xs font-medium text-brand-dark">{product.format}</span>
+                      </div>
+                      <div className="bg-white px-3 py-2 rounded border border-gray-100">
+                        <span className="block text-[10px] text-gray-400 uppercase">Target</span>
+                        <span className="text-xs font-medium text-brand-dark">{product.activeIngredient || 'General'}</span>
+                      </div>
+                   </div>
+                </div>
+
+                {/* Action */}
+                <div className="mt-auto pt-6 border-t border-gray-200/50 flex justify-between items-center">
+                   <span className="font-mono font-medium text-brand-dark">
+                      {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
+                   </span>
+                   <button 
+                     onClick={() => onAddToCart(product)}
+                     className="w-10 h-10 rounded-full bg-brand-dark text-white flex items-center justify-center hover:bg-brand-primary transition-colors shadow-lg shadow-brand-dark/20"
+                   >
+                      <Plus size={20} />
+                   </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Featured Routines Preview */}
       <section className="py-24 px-6 bg-surface-warm">
         <div className="max-w-6xl mx-auto">
@@ -99,7 +225,7 @@ const Home = ({ onStartQuiz, language }: { onStartQuiz: () => void, language: La
                 key={routine.id} 
                 routine={routine} 
                 language={language}
-                onClick={() => window.location.hash = `#/routines/${routine.id}`}
+                onClick={() => navigate(`/routines/${routine.id}`)}
               />
             ))}
           </div>
@@ -406,6 +532,11 @@ const App: React.FC = () => {
       setIsCartOpen(true);
   };
 
+  // Helper for single product add
+  const addSingleToCart = (product: Product) => {
+      addToCart([product]);
+  }
+
   const updateCartQuantity = (id: string, delta: number) => {
       setCart(prevCart => prevCart.map(item => {
           if (item.id === id) {
@@ -523,7 +654,7 @@ const App: React.FC = () => {
           {/* Main Content */}
           <main className="flex-grow">
             <Routes>
-                <Route path="/" element={<Home onStartQuiz={() => navigate('/quiz')} language={language} />} />
+                <Route path="/" element={<Home onStartQuiz={() => navigate('/quiz')} language={language} onAddToCart={addSingleToCart} />} />
                 <Route path="/quiz" element={<Quiz onComplete={handleQuizComplete} language={language} />} />
                 <Route path="/routines" element={<RoutinesList language={language} />} />
                 <Route path="/routines/:id" element={<WrapperRoutineDetail analysis={quizResult?.analysis} language={language} onAddBundle={addToCart} />} />
