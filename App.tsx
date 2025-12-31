@@ -578,7 +578,7 @@ const App: React.FC = () => {
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
               <Link to="/" className="flex items-center gap-3 group" onClick={() => setQuizResult(null)}>
                 <img 
-                    src="https://raw.githubusercontent.com/huynh044/Skincare-Project/main/logo.png
+                    src="https://raw.githubusercontent.com/huynh044/DogvsCat/f1c29b77a4b5e334d3f942763d36090ab1aa5d62/logo.png
 " 
                     alt="The Ordinary+" 
                     className="h-12 md:h-14 w-auto object-contain transition-transform group-hover:scale-105" 
@@ -671,7 +671,7 @@ const App: React.FC = () => {
                 <div className="space-y-6">
                     <div className="flex items-center gap-2">
                         <img 
-                            src="https://raw.githubusercontent.com/huynh044/Skincare-Project/main/logo.png
+                            src="https://raw.githubusercontent.com/huynh044/DogvsCat/f1c29b77a4b5e334d3f942763d36090ab1aa5d62/logo.png
 " 
                             alt="The Ordinary+" 
                             className="h-12 w-auto object-contain bg-surface-warm rounded p-1" 
